@@ -17,16 +17,16 @@
 
 state("re7", "1.4")
 {
-	int isdying : 		0x81E4148, 0x60;								//Checks for if you are dying
 	int gamePauseState: 0x82186C0, 0x28, 0x428, 0x40, 0x28, 0x104;
 	string128 map : 	0x81DE6A8, 0x700, 0x0;
+	int isdying : 		0x81E4148, 0x60;								//Checks for if you are dying
 }
 
 state("re7", "cerod")
 {
 	int gamePauseState: 0x93698F0, 0x28, 0x428, 0x40, 0x28, 0x104;
-	string128 map : 0x932F7E8, 0x700, 0x0;
-	int isdying : 0x93352C0, 0x60;
+	string128 map : 	0x932F7E8, 0x700, 0x0;
+	int isdying : 		0x93352C0, 0x60;
 }
 
 state("re7", "cerod_nvidia")
@@ -78,14 +78,12 @@ state("re7", "CeroD 20.4.0.2")
 
 startup
 {
-	var bytes = File.ReadAllBytes(@"Components\LiveSplit.ASLHelper.bin");
-    var type = Assembly.Load(bytes).GetType("ASLHelper.Main");
-    vars.Helper = Activator.CreateInstance(type, timer, this);
+	Assembly.Load(File.ReadAllBytes("Components/asl-help")).CreateInstance("Basic");
 
-    vars.Helper.UI["Total Time"].Left = "Time:";
-    vars.Helper.UI["Total Time"].Right = "00:00.000";
+	vars.Helper.Texts["Total Time"].Left = "Time:";
+	vars.Helper.Texts["Total Time"].Right = "00:00.000";
 
-    vars.TotalTimeInSeconds = 0f;
+	vars.TotalTimeInSeconds = 0f;
 	
 	settings.Add("maingame", false, "Main Campaign");
 	settings.CurrentDefaultParent = "maingame";
@@ -197,8 +195,8 @@ init
 {
 	vars.splits = new HashSet<string>();
 	vars.inventoryPtr = IntPtr.Zero;
-    vars.fuse3PickedUp = 0;
-    vars.fuse2PickedUp = 0;
+	vars.fuse3PickedUp = 0;
+	vars.fuse2PickedUp = 0;
 
 	vars.Jack55Full = 0;
 	vars.Jack55Timer = 0;
@@ -253,43 +251,40 @@ init
 
 	// Track inventory IDs
 	if (version == "Next Gen"){
-    current.inventory = new string[20].Select((_, i) => {
-        StringBuilder sb = new StringBuilder(300);
-        IntPtr ptr;
+		current.inventory = new string[20].Select((_, i) => {
+		StringBuilder sb = new StringBuilder(300);
+		IntPtr ptr;
 		new DeepPointer(vars.inventoryPtr, 0x60, 0x10, 0x20 + (i * 8), 0x18, 0x80, 0x14).DerefOffsets(memory, out ptr);
-	memory.ReadString(ptr, sb);
-    return sb.ToString();
-    }).ToArray();
+		memory.ReadString(ptr, sb);
+		return sb.ToString();
+		}).ToArray();
 	}
 	
 	else{
 		current.inventory = new string[20].Select((_, i) => {
-        StringBuilder sb = new StringBuilder(300);
-        IntPtr ptr;
+		StringBuilder sb = new StringBuilder(300);
+		IntPtr ptr;
 		new DeepPointer(vars.inventoryPtr, 0x60, 0x20, 0x30 + (i * 8), 0x28, 0x80, 0x24).DerefOffsets(memory, out ptr);
-	memory.ReadString(ptr, sb);
-    return sb.ToString();
-    }).ToArray();
+		memory.ReadString(ptr, sb);
+		return sb.ToString();
+		}).ToArray();
 	}
 }
 
 onStart
 {
-    vars.TotalTimeInSeconds = 0f;
+	vars.TotalTimeInSeconds = 0f;
 }
 
 start
 {	
-	if (settings["nah"])
-	{
+	if (settings["nah"]){
 		return (current.map == "c04_CavePassage01" && current.inventory[0] == "CKnife" || current.map == "c04_Ship3FInfirmaryPast");
 	}
-	if (settings["eoz"])
-	{
+	if (settings["eoz"]){
 		return (current.map == "sm0878_Carpet08A" || current.map == "c04_Ship3FInfirmaryPast" || current.map == "c09_JoeHouseInside" && current.inventory[0] == "NumaItem071");
 	}
-	if (settings["meme"])
-	{
+	if (settings["meme"]){
 		return ((current.inventory[0] == "Knife" || current.inventory[1] == "Knife") && current.map == "c03_MainHouse1FWash");
 	}
 	if (settings["55th"]){
@@ -305,28 +300,28 @@ update
 	
 	// Track inventory IDs
 	if (version == "Next Gen"){
-    current.inventory = new string[20].Select((_, i) => {
-        StringBuilder sb = new StringBuilder(300);
-        IntPtr ptr;
+		current.inventory = new string[20].Select((_, i) => {
+		StringBuilder sb = new StringBuilder(300);
+		IntPtr ptr;
 		new DeepPointer(vars.inventoryPtr, 0x60, 0x10, 0x20 + (i * 8), 0x18, 0x80, 0x14).DerefOffsets(memory, out ptr);
-	memory.ReadString(ptr, sb);
-    return sb.ToString();
-    }).ToArray();
+		memory.ReadString(ptr, sb);
+		return sb.ToString();
+		}).ToArray();
 	}
 	
 	else{
 		current.inventory = new string[20].Select((_, i) => {
-        StringBuilder sb = new StringBuilder(300);
-        IntPtr ptr;
+		StringBuilder sb = new StringBuilder(300);
+		IntPtr ptr;
 		new DeepPointer(vars.inventoryPtr, 0x60, 0x20, 0x30 + (i * 8), 0x28, 0x80, 0x24).DerefOffsets(memory, out ptr);
-	memory.ReadString(ptr, sb);
-    return sb.ToString();
-    }).ToArray();
+		memory.ReadString(ptr, sb);
+		return sb.ToString();
+		}).ToArray();
 	}
 		
-  vars.isdead = (current.isdying == 0 ? 1 : 0);
-  
-	if (timer.CurrentPhase == TimerPhase.NotRunning) { vars.splits.Clear(); vars.fuse2PickedUp = 0; vars.fuse3PickedUp = 0; vars.Jack55Full = 0; vars.Jack55Finish = 0; vars.Jack55Timer = 0; vars.Helper.UI["Total Time"].Right = "00:00.000";}
+	vars.isdead = (current.isdying == 0 ? 1 : 0);
+
+	if (timer.CurrentPhase == TimerPhase.NotRunning) { vars.splits.Clear(); vars.fuse2PickedUp = 0; vars.fuse3PickedUp = 0; vars.Jack55Full = 0; vars.Jack55Finish = 0; vars.Jack55Timer = 0; vars.Helper.Texts["Total Time"].Right = "00:00.000";}
 	
 	
 	if(settings ["55th"]){	
@@ -348,7 +343,7 @@ update
 			vars.Jack55Finish = vars.Jack55Timer - vars.Jack55Full;
 			vars.TotalTimeInSeconds += vars.Jack55Finish;
 			
-			vars.Helper.UI["Total Time"].Right = TimeSpan.FromMilliseconds(vars.TotalTimeInSeconds).ToString(@"mm\:ss\.fff");
+			vars.Helper.Texts["Total Time"].Right = TimeSpan.FromMilliseconds(vars.TotalTimeInSeconds).ToString(@"mm\:ss\.fff");
 		}
 	}
 }
@@ -358,39 +353,29 @@ split
 	// Item splits
 	string[] currentInventory = (current.inventory as string[]);
 	string[] oldInventory = (old.inventory as string[]); // throws error first update, will be fine afterwards.
-	if (!currentInventory.SequenceEqual(oldInventory))
-	{
+	if (!currentInventory.SequenceEqual(oldInventory)){
 		string[] delta = (currentInventory as string[]).Where((v, i) => v != oldInventory[i]).ToArray();
 
-		foreach (string item in delta)
-		{
-			if (item == "FuseCh4")
-            {
-                if (vars.fuse2PickedUp == 0 && current.map != "c04_Ship1FCorridor") 
-                {
-                    vars.fuse2PickedUp = 1;
-                    return settings["fuse2"];
-                }
-                else if (vars.fuse3PickedUp == 0 && current.map == "c04_Ship1FCorridor") 
-                {
-                    if (settings["fuse2"])
-                    {
-                        if (vars.fuse2PickedUp == 1)
-                        {
-                            vars.fuse3PickedUp = 1;
-                            return settings["fuse3"];
-                        }
-                    }
-                    else
-                    {
-                        vars.fuse3PickedUp = 1;
-                        return settings["fuse3"];
-                    }
-                    
-                }
-            }
-            else if (!vars.splits.Contains(item))
-			{
+		foreach (string item in delta){
+			if (item == "FuseCh4"){
+				if (vars.fuse2PickedUp == 0 && current.map != "c04_Ship1FCorridor"){
+					vars.fuse2PickedUp = 1;
+					return settings["fuse2"];
+				}
+				else if (vars.fuse3PickedUp == 0 && current.map == "c04_Ship1FCorridor"){
+					if (settings["fuse2"]){
+						if (vars.fuse2PickedUp == 1){
+							vars.fuse3PickedUp = 1;
+							return settings["fuse3"];
+						}
+					}
+					else{
+						vars.fuse3PickedUp = 1;
+						return settings["fuse3"];
+					}
+				}
+			}
+			else if (!vars.splits.Contains(item)){
 				vars.splits.Add(item);
 				return settings[item];
 			}
@@ -398,63 +383,51 @@ split
 	}
 
 
-    //Removed item splits
+	//Removed item splits
 
-    var removedItems = oldInventory.Except(currentInventory);
+	var removedItems = oldInventory.Except(currentInventory);
 
-    if (removedItems.Contains("ChainSaw") && vars.isdead == 0)
-    {
-        if (!vars.splits.Contains("removedSaw"))
-        {
-            vars.splits.Add("removedSaw");
-            return settings["chainsawduel"];
-        }
-    }
+	if (removedItems.Contains("ChainSaw") && vars.isdead == 0){
+		if (!vars.splits.Contains("removedSaw")){
+			vars.splits.Add("removedSaw");
+			return settings["chainsawduel"];
+		}
+	}
 
-    if (currentInventory.Count(v => v == "SerumComplete") == 1)
-    {
-        if (!vars.splits.Contains("injectedJack"))
-        {
-            vars.splits.Add("injectedJack");
-            return settings["hittheroadjack"];
-        }
-    }
+	if (currentInventory.Count(v => v == "SerumComplete") == 1){
+		if (!vars.splits.Contains("injectedJack")){
+			vars.splits.Add("injectedJack");
+			return settings["hittheroadjack"];
+		}
+	}
 
-    if (removedItems.Contains("Lantern") && vars.isdead == 0)
-    {
-        if (!vars.splits.Contains("usedTheLantern"))
-        {
-            vars.splits.Add("usedTheLantern");
-            return settings["usedlantern"];
-        }
-    }
+	if (removedItems.Contains("Lantern") && vars.isdead == 0){
+		if (!vars.splits.Contains("usedTheLantern")){
+			vars.splits.Add("usedTheLantern");
+			return settings["usedlantern"];
+		}
+	}
 
-    if (removedItems.Contains("SerumTypeE") && vars.isdead == 0 && current.map == "c04_c013F")
-    {
-        if (!vars.splits.Contains("injectedEvieWithSerum"))
-        {
-            vars.splits.Add("injectedEvieWithSerum");
-            return settings["injectedbitch"];
-        }
-    }
+	if (removedItems.Contains("SerumTypeE") && vars.isdead == 0 && current.map == "c04_c013F"){
+		if (!vars.splits.Contains("injectedEvieWithSerum")){
+			vars.splits.Add("injectedEvieWithSerum");
+			return settings["injectedbitch"];
+		}
+	}
 
-    if (removedItems.Contains("Handgun_Albert"))
-    {
-        if (!vars.splits.Contains("endMainCampaign"))
-        {
-            vars.splits.Add("endMainCampaign");
-            return settings["end"];
-        }
-    }
+	if (removedItems.Contains("Handgun_Albert")){
+		if (!vars.splits.Contains("endMainCampaign")){
+			vars.splits.Add("endMainCampaign");
+			return settings["end"];
+		}
+	}
 
-    if (removedItems.Contains("MachineGun"))
-    {
-        if (!vars.splits.Contains("videotapeend"))
-        {
-            vars.splits.Add("videotapeend");
-            return settings["videotapeend"];
-        }
-    }
+	if (removedItems.Contains("MachineGun")){
+		if (!vars.splits.Contains("videotapeend")){
+			vars.splits.Add("videotapeend");
+			return settings["videotapeend"];
+		}
+	}
 
 	if (settings["eoz"])
 	{
@@ -464,25 +437,20 @@ split
 		}
 	}
 	
-	if (removedItems.Contains("NumaItem030"))
-    {
-        if (!vars.splits.Contains("zoecuresplit"))
-        {
-            vars.splits.Add("zoecuresplit");
-            return settings["eoz_usedcure"];
-        }
-    }
+	if (removedItems.Contains("NumaItem030")){
+		if (!vars.splits.Contains("zoecuresplit")){
+			vars.splits.Add("zoecuresplit");
+			return settings["eoz_usedcure"];
+		}
+	}
 
 	// Map splits
-    if (current.map != old.map)
-	{
-		if (current.map == "c08_MiningPassage02_static" && old.map == "c08_MiningTunnel01" && !vars.splits.Contains(current.map) || current.map == "c08_MiningPassage02" && old.map == "c08_MiningTunnel01" && !vars.splits.Contains(current.map))
-        {
-            vars.splits.Add(current.map);
-            return settings["nah_bombgone"];
-        }
-        else if (!vars.splits.Contains(current.map))
-		{
+	if (current.map != old.map){
+		if (current.map == "c08_MiningPassage02_static" && old.map == "c08_MiningTunnel01" && !vars.splits.Contains(current.map) || current.map == "c08_MiningPassage02" && old.map == "c08_MiningTunnel01" && !vars.splits.Contains(current.map)){
+			vars.splits.Add(current.map);
+			return settings["nah_bombgone"];
+		}
+		else if (!vars.splits.Contains(current.map)){
 			vars.splits.Add(current.map);
 			return settings[current.map];
 		}
@@ -539,5 +507,4 @@ reset
 
 shutdown
 {
-    vars.Helper.Dispose();
 }
