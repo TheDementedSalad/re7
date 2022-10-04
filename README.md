@@ -13,16 +13,16 @@ Afterwards, create your splits. Name them anything you want (just make sure they
 
 Make sure you compare against Game Time.
 
-Any problems? Reach out to me.
+Any problems? Reach out to me or TheDementedSalad.
 
 # I have a split request?
 
-Great, reach out to me through the RE7 Speedrunning discord, and I'll see what I can do.
+Great, reach out to TheDementedSalad through the RE7 Speedrunning discord, and he'll see what he can do.
 
 # Something didn't split or split at the wrong time.
 
-Make sure you have the split checkmarked as explained above. If that doesn't work, or if a split of yours split at the wrong time, contact me.
+Make sure you have the split checkmarked as explained above. If that doesn't work, or if a split of yours split at the wrong time, contact TheDementedSalad.
 
 # Special thanks
 
-Psarthex, zgl, qvaku, and DarkRageGames for helping me aquire the Cero D version
+Psarthex, zgl, qvaku, and DarkRageGames for helping me aquire the Cero D version.
