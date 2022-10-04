@@ -23,6 +23,9 @@ Great, reach out to TheDementedSalad through the RE7 Speedrunning discord, and h
 
 Make sure you have the split checkmarked as explained above. If that doesn't work, or if a split of yours split at the wrong time, contact TheDementedSalad.
 
+
 # Special thanks
 
-Psarthex, zgl, qvaku, and DarkRageGames for helping me aquire the Cero D version.
+CursedToast for all of his work over the years on this game and many others.
+
+Psarthex, zgl, qvaku, and DarkRageGames for helping Toast aquire the Cero D version.
