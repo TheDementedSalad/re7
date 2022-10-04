@@ -1,6 +1,6 @@
 # Resident Evil 7 Autosplitter
 
-Care to buy me a coffee?
+Toast put a lot of work into this over the years, so please if you would like to support him you can buy him a coffee here.
 https://streamlabs.com/cursedtoast/tip
 
 # Instructions
@@ -13,7 +13,7 @@ Afterwards, create your splits. Name them anything you want (just make sure they
 
 Make sure you compare against Game Time.
 
-Any problems? Reach out to me or TheDementedSalad.
+Any problems? Reach out to TheDementedSalad
 
 # I have a split request?
 
