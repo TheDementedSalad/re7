@@ -56,7 +56,7 @@ state("re7", "12/17 Update")
 	byte Jack55End : 0x8227C20, 0xB0;
 }
 
-state("re7", "Next Gen")
+state("re7", "STEAM-NextGen")
 {
 	int gamePauseState: 0x8FC42F8, 0x104;
 	string128 map : 0x8F7DE00, 0x960, 0x0;
@@ -69,7 +69,7 @@ state("re7", "Next Gen")
 	byte Jack55End : 0x8F80FF8, 0xB0;
 }
 
-state("re7", "6/10/22")
+state("re7", "STEAM-6/10/22")
 {
 	int gamePauseState: 0x8FC4478, 0x104;
 	string128 map : 0x8F7DF80, 0x960, 0x0;
@@ -198,7 +198,11 @@ startup
 	
 	settings.Add("55th", false, "Jack's 55th Birthday");
 	
-	
+	vars.hashToVersion = new Dictionary<string, string> {
+		// Steam
+		{ "9EDD76273F6653F2B39DE5B9CBB6EFA4", "NextGen" },
+		{ "401BA759C4F1FE95ED06B33084FAA187", "6/10/22"}
+	};
 }
 
 init
@@ -245,10 +249,6 @@ init
 			version = "12/17 Update";
 			vars.inventoryPtr = 0x81F1308;
 			break;
-		case (161280000):
-			version = "Next Gen";
-			vars.inventoryPtr = 0x8FB9B48;
-			break;
 		case (162783232):
 			version = "CeroD 20.4.0.2";
 			vars.inventoryPtr = 0x9355468;
@@ -258,9 +258,17 @@ init
 			vars.inventoryPtr = 0x707FCD0;
 			break;
 	}
+	
+	if(version == "STEAM-NextGen"){
+		vars.inventoryPtr = 0x8FB9B48;
+	}
+	
+	if(version == "STEAM-6/10/22"){
+		vars.inventoryPtr = 0x8FB9CC8;
+	}
 
 	// Track inventory IDs
-	if (version == "Next Gen"){
+	if (version == "STEAM-NextGen" || version == "STEAM-6/10/22"){
 		current.inventory = new string[20].Select((_, i) => {
 		StringBuilder sb = new StringBuilder(300);
 		IntPtr ptr;
@@ -279,6 +287,33 @@ init
 		return sb.ToString();
 		}).ToArray();
 	}
+	
+	vars.isLoading = false;
+	vars.gameModule = modules.First();
+	// Default Value is something like: `K:\RemnantFromTheAshes\Remnant\Binaries\Win64\Remnant-Win64-Shipping.exe`
+	// Technically you can (easily) have an Epic install without the .egstore due to the way Epic launches their games but y'know *meh*
+	vars.gameStorefront = Directory.Exists(vars.gameModule.FileName + "/../../../../.egstore") ? "EGS" : "STEAM";
+	
+	// Creating a hash of the file seems to be a relatively *ok* way of detecting the version.
+	// For some reason getting the product version from the exe itself, doesn't work, and it just returns an empty string
+	// You could fix this by creating a DLL Component instead of an ASL, which is alot of effort and I don't feel like doing that.
+	using (var stream = new FileStream(vars.gameModule.FileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite, 16 * 1024 * 1024))
+	{
+	    byte[] checksum = System.Security.Cryptography.MD5.Create().ComputeHash(stream);
+	    vars.gameHash = BitConverter.ToString(checksum).Replace("-", String.Empty);
+	}
+
+	if(!vars.hashToVersion.ContainsKey(vars.gameHash)) {
+		print("[Remnant ASL]: Unknown/Unsupported Game Hash: " + vars.gameHash.ToString());
+		MessageBox.Show("Unknown Game Hash: \"" + vars.gameHash.ToString() + "\" \n Contact the developers for help!\nHash Copied to clipboard...", "Remnant ASL", MessageBoxButtons.OK, MessageBoxIcon.Error);
+		Clipboard.SetText(vars.gameHash.ToString());
+		return;
+	}
+
+	version = (vars.gameStorefront + "-" + vars.hashToVersion[vars.gameHash]);
+	print("[Remnant ASL]: Game Storefront: " + vars.gameStorefront.ToString());
+	print("[Remnant ASL]: Game Hash: " + vars.gameHash.ToString());
+	print("[Remnant ASL]: ASL Version: " + version.ToString());
 }
 
 onStart
