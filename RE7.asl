@@ -69,6 +69,19 @@ state("re7", "Next Gen")
 	byte Jack55End : 0x8F80FF8, 0xB0;
 }
 
+state("re7", "6/10/22")
+{
+	int gamePauseState: 0x8FC4478, 0x104;
+	string128 map : 0x8F7DF80, 0x960, 0x0;
+	int isdying : 0x8FB9CC8, 0x60;
+	int Jack55Bonus : 0x8F81178, 0x70, 0x58;
+	int Jack55IGT : 0x8F81178, 0x70, 0x98;
+	int Jack55Extra : 0x8F81178, 0x70, 0xC0;
+	int Jack55Start : 0x8F81178, 0x70, 0xC8;
+	byte Jack55Level : 0x8F81178, 0x6C8, 0x270, 0xB8, 0x3D0, 0x80, 0x1C4;
+	byte Jack55End : 0x8F81178, 0xB0;
+}
+
 state("re7", "CeroD 20.4.0.2")
 {
 	int gamePauseState: 0x9384AB8, 0x104;
@@ -79,9 +92,6 @@ state("re7", "CeroD 20.4.0.2")
 startup
 {
 	Assembly.Load(File.ReadAllBytes("Components/asl-help")).CreateInstance("Basic");
-
-	vars.Helper.Texts["Total Time"].Left = "Time:";
-	vars.Helper.Texts["Total Time"].Right = "00:00.000";
 
 	vars.TotalTimeInSeconds = 0f;
 	
@@ -207,7 +217,7 @@ init
 	{
 		case (241680384):
 			version = "1.2";
-			vars.inventoryPtr = 0x7091CA0;
+			awds
 			break;
 		case (162590720):
 			version = "cerod_nvidia";
@@ -299,7 +309,7 @@ update
 	//print(modules.First().ModuleMemorySize.ToString());
 	
 	// Track inventory IDs
-	if (version == "Next Gen"){
+	if (version == "Next Gen" || version == "6/10/22"){
 		current.inventory = new string[20].Select((_, i) => {
 		StringBuilder sb = new StringBuilder(300);
 		IntPtr ptr;
@@ -324,7 +334,11 @@ update
 	if (timer.CurrentPhase == TimerPhase.NotRunning) { vars.splits.Clear(); vars.fuse2PickedUp = 0; vars.fuse3PickedUp = 0; vars.Jack55Full = 0; vars.Jack55Finish = 0; vars.Jack55Timer = 0; vars.Helper.Texts["Total Time"].Right = "00:00.000";}
 	
 	
-	if(settings ["55th"]){	
+	if(settings["55th"]){	
+	
+		vars.Helper.Texts["Total Time"].Left = "Time:";
+		vars.Helper.Texts["Total Time"].Right = "00:00.000";
+		
 		if(current.Jack55Level == 0 || current.Jack55Level == 2 || current.Jack55Level == 5){
 			vars.Jack55Timer = 900000;
 		}
@@ -346,6 +360,10 @@ update
 			vars.Helper.Texts["Total Time"].Right = TimeSpan.FromMilliseconds(vars.TotalTimeInSeconds).ToString(@"mm\:ss\.fff");
 		}
 	}
+	
+	if (!settings["55th"]){
+		vars.Helper.Texts.RemoveAll();
+		}
 }
 
 split
@@ -495,7 +513,11 @@ split
 
 isLoading
 {	
-	return current.gamePauseState != 0 && current.gamePauseState != 262400 && current.gamePauseState != 8 && current.gamePauseState != 262144 || current.Jack55End == 1;
+	if(settings["55th"]){
+		return current.gamePauseState != 0 && current.gamePauseState != 262400 && current.gamePauseState != 8 && current.gamePauseState != 262144 || current.Jack55End == 1;
+	}
+	
+	else return current.gamePauseState != 0 && current.gamePauseState != 262400 && current.gamePauseState != 8 && current.gamePauseState != 262144;
 }
 
 reset
