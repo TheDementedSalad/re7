@@ -217,7 +217,7 @@ init
 	{
 		case (241680384):
 			version = "1.2";
-			awds
+			vars.inventoryPtr = 0x7091CA0;
 			break;
 		case (162590720):
 			version = "cerod_nvidia";
