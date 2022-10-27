@@ -14,14 +14,6 @@
 //TheDementedSalad - found pointers for Steam DX12 update & CeroD Splashscreen update + Made Jack's 55th  timer.
 //Ero - ASL helper and code for mm:ss:fff timer for Jack's 55th
 
-
-state("re7", "1.4")
-{
-	int gamePauseState: 0x82186C0, 0x28, 0x428, 0x40, 0x28, 0x104;
-	string128 map : 	0x81DE6A8, 0x700, 0x0;
-	int isdying : 		0x81E4148, 0x60;								//Checks for if you are dying
-}
-
 state("re7", "cerod")
 {
 	int gamePauseState: 0x93698F0, 0x28, 0x428, 0x40, 0x28, 0x104;
@@ -36,11 +28,11 @@ state("re7", "cerod_nvidia")
 	int isdying : 0x9322E10, 0x60;
 }
 
-state("re7", "Buy RE8!! Version")
+state("re7", "CeroD 20.4.0.2")
 {
-	int gamePauseState: 0x81FB9F8, 0x108;
-	string128 map : 0x81EACE0, 0x700, 0x0;
-	int isdying : 0x81F24E8, 0x60;
+	int gamePauseState: 0x9384AB8, 0x104;
+	string128 map : 0x934A600, 0x700, 0x0;
+	int isdying : 0x9355468, 0x60;
 }
 
 state("re7", "12/17 Update")
@@ -56,7 +48,7 @@ state("re7", "12/17 Update")
 	byte Jack55End : 0x8227C20, 0xB0;
 }
 
-state("re7", "STEAM-NextGen")
+state("re7", "NextGen")
 {
 	int gamePauseState: 0x8FC42F8, 0x104;
 	string128 map : 0x8F7DE00, 0x960, 0x0;
@@ -69,7 +61,7 @@ state("re7", "STEAM-NextGen")
 	byte Jack55End : 0x8F80FF8, 0xB0;
 }
 
-state("re7", "STEAM-6/10/22")
+state("re7", "6/10/22")
 {
 	int gamePauseState: 0x8FC4478, 0x104;
 	string128 map : 0x8F7DF80, 0x960, 0x0;
@@ -80,13 +72,6 @@ state("re7", "STEAM-6/10/22")
 	int Jack55Start : 0x8F81178, 0x70, 0xC8;
 	byte Jack55Level : 0x8F81178, 0x6C8, 0x270, 0xB8, 0x3D0, 0x80, 0x1C4;
 	byte Jack55End : 0x8F81178, 0xB0;
-}
-
-state("re7", "CeroD 20.4.0.2")
-{
-	int gamePauseState: 0x9384AB8, 0x104;
-	string128 map : 0x934A600, 0x700, 0x0;
-	int isdying : 0x9355468, 0x60;
 }
 
 startup
@@ -135,7 +120,7 @@ startup
 	settings.Add("Magnum", false, "Magnum");
 	settings.Add("MasterKey", false, "Snake Key");
 	settings.Add("GrenadeLauncher", false, "Grenade Launcher");
-	settings.Add("LucasCardKey2", false, "Red Key Card");
+	settings.Add("LucasCardKey2", false, "Red Keycard");
 	settings.Add("LucasCardKey", false, "Blue Keycard");
 	settings.Add("c03_LeftArea2FTvRoom", false, "Reached Lucas TV room");
 	settings.Add("Battery", false, "Battery");
@@ -197,12 +182,6 @@ startup
 	settings.CurrentDefaultParent = null;
 	
 	settings.Add("55th", false, "Jack's 55th Birthday");
-	
-	vars.hashToVersion = new Dictionary<string, string> {
-		// Steam
-		{ "9EDD76273F6653F2B39DE5B9CBB6EFA4", "NextGen" },
-		{ "401BA759C4F1FE95ED06B33084FAA187", "6/10/22"}
-	};
 }
 
 init
@@ -216,59 +195,45 @@ init
 	vars.Jack55Timer = 0;
 	vars.Jack55Finish = 0;
 	
-
-	switch (modules.First().ModuleMemorySize)
-	{
-		case (241680384):
-			version = "1.2";
-			vars.inventoryPtr = 0x7091CA0;
-			break;
-		case (162590720):
-			version = "cerod_nvidia";
-			vars.inventoryPtr = 0x9322E10;
-			break;
-		case (248446976):
-			version = "1.3";
-			vars.inventoryPtr = 0x70DADB0;
-			break;
-		case (272252928):
-		case (142016512):
-			version = "1.4";
-			vars.inventoryPtr = 0x81E4148;
-			break;
-		case (162668544):
-		case (342978560):
-			version = "cerod";
-			vars.inventoryPtr = 0x93352C0;
-			break;
-		case (142069760):
-			version = "Buy RE8!! Version";
-			vars.inventoryPtr = 0x081F24E8;
-			break;
-		case (142065664):
+	try{
+		// Latest Steam updates that share same MemorySize
+		switch ((string)vars.Helper.GetMD5Hash()){
+			case "C505F2F8DD88C1478DA4B98FD49D7991":
 			version = "12/17 Update";
 			vars.inventoryPtr = 0x81F1308;
 			break;
-		case (162783232):
-			version = "CeroD 20.4.0.2";
-			vars.inventoryPtr = 0x9355468;
+			case "9EDD76273F6653F2B39DE5B9CBB6EFA4":
+			version = "NextGen";
+			vars.inventoryPtr = 0x8FB9B48;
 			break;
-		default:
-			version = "1.1";
-			vars.inventoryPtr = 0x707FCD0;
+			case "401BA759C4F1FE95ED06B33084FAA187":
+			version = "6/10/22";
+			vars.inventoryPtr = 0x8FB9CC8;
 			break;
+		}
 	}
-	
-	if(version == "STEAM-NextGen"){
-		vars.inventoryPtr = 0x8FB9B48;
-	}
-	
-	if(version == "STEAM-6/10/22"){
-		vars.inventoryPtr = 0x8FB9CC8;
+	catch{
+		// Failed to open file for MD5 computation.
+		// Windows Store Versions
+		switch ((int)vars.Helper.GetMemorySize()){
+			case (162590720):
+				version = "cerod_nvidia";
+				vars.inventoryPtr = 0x9322E10;
+				break;
+			case (162668544):
+			case (342978560):
+				version = "cerod";
+				vars.inventoryPtr = 0x93352C0;
+				break;
+			case (162783232):
+				version = "CeroD 20.4.0.2";
+				vars.inventoryPtr = 0x9355468;
+				break;
+		}
 	}
 
 	// Track inventory IDs
-	if (version == "STEAM-NextGen" || version == "STEAM-6/10/22"){
+	if (version == "NextGen" || version == "6/10/22"){
 		current.inventory = new string[20].Select((_, i) => {
 		StringBuilder sb = new StringBuilder(300);
 		IntPtr ptr;
@@ -286,35 +251,6 @@ init
 		memory.ReadString(ptr, sb);
 		return sb.ToString();
 		}).ToArray();
-	}
-	
-	if(version != "CeroD 20.4.0.2"){
-		vars.isLoading = false;
-		vars.gameModule = modules.First();
-		// Default Value is something like: `K:\RemnantFromTheAshes\Remnant\Binaries\Win64\Remnant-Win64-Shipping.exe`
-		// Technically you can (easily) have an Epic install without the .egstore due to the way Epic launches their games but y'know *meh*
-		vars.gameStorefront = Directory.Exists(vars.gameModule.FileName + "/../../../../.egstore") ? "EGS" : "STEAM";
-		
-		// Creating a hash of the file seems to be a relatively *ok* way of detecting the version.
-		// For some reason getting the product version from the exe itself, doesn't work, and it just returns an empty string
-		// You could fix this by creating a DLL Component instead of an ASL, which is alot of effort and I don't feel like doing that.
-		using (var stream = new FileStream(vars.gameModule.FileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite, 16 * 1024 * 1024))
-		{
-			byte[] checksum = System.Security.Cryptography.MD5.Create().ComputeHash(stream);
-			vars.gameHash = BitConverter.ToString(checksum).Replace("-", String.Empty);
-		}
-
-		if(!vars.hashToVersion.ContainsKey(vars.gameHash)) {
-			print("[Remnant ASL]: Unknown/Unsupported Game Hash: " + vars.gameHash.ToString());
-			MessageBox.Show("Unknown Game Hash: \"" + vars.gameHash.ToString() + "\" \n Contact the developers for help!\nHash Copied to clipboard...", "Remnant ASL", MessageBoxButtons.OK, MessageBoxIcon.Error);
-			Clipboard.SetText(vars.gameHash.ToString());
-			return;
-		}
-
-		version = (vars.gameStorefront + "-" + vars.hashToVersion[vars.gameHash]);
-		print("[Remnant ASL]: Game Storefront: " + vars.gameStorefront.ToString());
-		print("[Remnant ASL]: Game Hash: " + vars.gameHash.ToString());
-		print("[Remnant ASL]: ASL Version: " + version.ToString());
 	}
 }
 
@@ -366,13 +302,21 @@ update
 		}).ToArray();
 	}
 		
+	vars.Log(current.inventory[0]);
+		
 	vars.isdead = (current.isdying == 0 ? 1 : 0);
 
-	if (timer.CurrentPhase == TimerPhase.NotRunning) { vars.splits.Clear(); vars.fuse2PickedUp = 0; vars.fuse3PickedUp = 0; vars.Jack55Full = 0; vars.Jack55Finish = 0; vars.Jack55Timer = 0; vars.Helper.Texts["Total Time"].Right = "00:00.000";}
+	if (timer.CurrentPhase == TimerPhase.NotRunning){ 
+		vars.splits.Clear();
+		vars.fuse2PickedUp = 0;
+		vars.fuse3PickedUp = 0;
+		vars.Jack55Full = 0;
+		vars.Jack55Finish = 0;
+		vars.Jack55Timer = 0;
+	}
 	
 	
 	if(settings["55th"]){	
-	
 		vars.Helper.Texts["Total Time"].Left = "Time:";
 		vars.Helper.Texts["Total Time"].Right = "00:00.000";
 		
@@ -400,7 +344,7 @@ update
 	
 	if (!settings["55th"]){
 		vars.Helper.Texts.RemoveAll();
-		}
+	}
 }
 
 split
@@ -561,6 +505,7 @@ reset
 {
 	if (settings["55th"]){
 		return current.gamePauseState == 0 && old.gamePauseState == 256;
+		vars.Helper.Texts["Total Time"].Right = "00:00.000";
 	}
 }
 
