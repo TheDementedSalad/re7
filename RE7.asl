@@ -313,6 +313,7 @@ update
 		vars.Jack55Full = 0;
 		vars.Jack55Finish = 0;
 		vars.Jack55Timer = 0;
+		vars.Helper.Texts["Total Time"].Right = "00:00.000";
 	}
 	
 	
@@ -505,7 +506,6 @@ reset
 {
 	if (settings["55th"]){
 		return current.gamePauseState == 0 && old.gamePauseState == 256;
-		vars.Helper.Texts["Total Time"].Right = "00:00.000";
 	}
 }
 
