@@ -288,18 +288,34 @@ init
 		}).ToArray();
 	}
 	
+	if(version != "CeroD 20.4.0.2"){
+		vars.isLoading = false;
 		vars.gameModule = modules.First();
+		// Default Value is something like: `K:\RemnantFromTheAshes\Remnant\Binaries\Win64\Remnant-Win64-Shipping.exe`
+		// Technically you can (easily) have an Epic install without the .egstore due to the way Epic launches their games but y'know *meh*
 		vars.gameStorefront = Directory.Exists(vars.gameModule.FileName + "/../../../../.egstore") ? "EGS" : "STEAM";
 		
-		if(version != "CeroD 20.4.0.2"){ 
-			using (var stream = new FileStream(vars.gameModule.FileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite, 16 * 1024 * 1024))
-			{
-				byte[] checksum = System.Security.Cryptography.MD5.Create().ComputeHash(stream);
-				vars.gameHash = BitConverter.ToString(checksum).Replace("-", String.Empty);
-			}
-
-			version = (vars.gameStorefront + "-" + vars.hashToVersion[vars.gameHash]);
+		// Creating a hash of the file seems to be a relatively *ok* way of detecting the version.
+		// For some reason getting the product version from the exe itself, doesn't work, and it just returns an empty string
+		// You could fix this by creating a DLL Component instead of an ASL, which is alot of effort and I don't feel like doing that.
+		using (var stream = new FileStream(vars.gameModule.FileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite, 16 * 1024 * 1024))
+		{
+			byte[] checksum = System.Security.Cryptography.MD5.Create().ComputeHash(stream);
+			vars.gameHash = BitConverter.ToString(checksum).Replace("-", String.Empty);
 		}
+
+		if(!vars.hashToVersion.ContainsKey(vars.gameHash)) {
+			print("[Remnant ASL]: Unknown/Unsupported Game Hash: " + vars.gameHash.ToString());
+			MessageBox.Show("Unknown Game Hash: \"" + vars.gameHash.ToString() + "\" \n Contact the developers for help!\nHash Copied to clipboard...", "Remnant ASL", MessageBoxButtons.OK, MessageBoxIcon.Error);
+			Clipboard.SetText(vars.gameHash.ToString());
+			return;
+		}
+
+		version = (vars.gameStorefront + "-" + vars.hashToVersion[vars.gameHash]);
+		print("[Remnant ASL]: Game Storefront: " + vars.gameStorefront.ToString());
+		print("[Remnant ASL]: Game Hash: " + vars.gameHash.ToString());
+		print("[Remnant ASL]: ASL Version: " + version.ToString());
+	}
 }
 
 onStart
