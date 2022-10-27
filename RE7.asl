@@ -302,8 +302,6 @@ update
 		}).ToArray();
 	}
 		
-	vars.Log(current.inventory[0]);
-		
 	vars.isdead = (current.isdying == 0 ? 1 : 0);
 
 	if (timer.CurrentPhase == TimerPhase.NotRunning){ 
