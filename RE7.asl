@@ -1,6 +1,6 @@
 //Resident Evil 7 Autosplitter
 //By CursedToast 1/28/2017
-//Last updated 23/06/2022
+//Last updated 21/11/2022
 
 //Special thanks to:
 // Souzooka - helping me re-code this to reduce lag and improving my coding in ASL. Couldn't have done this without him :)
@@ -302,6 +302,8 @@ update
 		}).ToArray();
 	}
 		
+	vars.Log(current.inventory[0]);
+		
 	vars.isdead = (current.isdying == 0 ? 1 : 0);
 
 	if (timer.CurrentPhase == TimerPhase.NotRunning){ 
@@ -454,7 +456,7 @@ split
 		}
 	}
 
-	if (current.map == "c01_Outside01" && current.inventory[0] != "MailMia" && settings["100family"] == false && !vars.splits.Contains("welcome2family"))
+	if (old.map == "c01_3F" && current.map == "c01_Outside01" && current.inventory[0] != "MailMia" && settings["100family"] == false && !vars.splits.Contains("welcome2family"))
 	{
 		vars.splits.Add("welcome2family");
 		return settings["welcome2family"];
