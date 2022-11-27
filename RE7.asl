@@ -1,6 +1,6 @@
 //Resident Evil 7 Autosplitter
 //By CursedToast 1/28/2017
-//Last updated 21/11/2022
+//Last updated 27/11/2022
 
 //Special thanks to:
 // Souzooka - helping me re-code this to reduce lag and improving my coding in ASL. Couldn't have done this without him :)
@@ -106,7 +106,7 @@ startup
 	settings.Add("ChainSaw", false, "Chainsaw");
 	settings.Add("chainsawduel", false, "Finished chainsaw fight");
 	settings.Add("MorgueKey", false, "Scorpion Key");
-	settings.Add("c03_TrailerHouse", false, "Reached the trailer (first time)");
+	settings.Add("Trailer1", false, "Reached the trailer (first time)");
 	settings.Add("c03_OldHouse1FEntrance01", false, "Reached the Old House");
 	settings.Add("BurnerPartsA", false, "Burner Grip");
 	settings.Add("BurnerPartsB", false, "Burner Nozzle");
@@ -466,6 +466,12 @@ split
 	{
 		vars.splits.Add("100family");
 		return settings["100family"];
+	}
+	
+	if (current.map == "c03_TrailerHouse" && old.map == "c03_GardenArea1" && !vars.splits.Contains("Trailer1"))
+	{
+		vars.splits.Add("Trailer1");
+		return settings["Trailer1"];
 	}
 	
 	if (current.map == "c08_BossRoom01" && !vars.splits.Contains("lucsbossRoom"))
