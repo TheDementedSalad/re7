@@ -17,6 +17,7 @@
 state("re7", "cerod")
 {
 	int gamePauseState: 0x93698F0, 0x28, 0x428, 0x40, 0x28, 0x104;
+	byte Menu: 0x93698F0, 0x28, 0x428, 0x40, 0x28, 0xAD;
 	string128 map : 	0x932F7E8, 0x700, 0x0;
 	int isdying : 		0x93352C0, 0x60;
 }
@@ -24,6 +25,7 @@ state("re7", "cerod")
 state("re7", "cerod_nvidia")
 {
 	int gamePauseState: 0x9358310, 0x28, 0x428, 0x40, 0x28, 0x104;
+	byte Menu: 0x9358310, 0x28, 0x428, 0x40, 0x28, 0xAD;
 	string128 map : 0x931D8E8, 0x700, 0x0;
 	int isdying : 0x9322E10, 0x60;
 }
@@ -31,13 +33,15 @@ state("re7", "cerod_nvidia")
 state("re7", "CeroD 20.4.0.2")
 {
 	int gamePauseState: 0x9384AB8, 0x104;
+	byte Menu: 0x9384AB8, 0xAD;
 	string128 map : 0x934A600, 0x700, 0x0;
 	int isdying : 0x9355468, 0x60;
 }
 
 state("re7", "12/17 Update")
 {
-	int gamePauseState: 0x81FA818, 0x108;
+	int gamePauseState: 0x81FA818, 0x104;
+	byte Menu: 0x81FA818, 0xAD;
 	string128 map : 0x81E9B00, 0x700, 0x0;
 	int isdying : 0x81F1308, 0x60;
 	int Jack55Bonus : 0x8227C20, 0x70, 0x58;
@@ -51,6 +55,7 @@ state("re7", "12/17 Update")
 state("re7", "NextGen")
 {
 	int gamePauseState: 0x8FC42F8, 0x104;
+	byte Menu: 0x8FC42F8, 0xAD;
 	string128 map : 0x8F7DE00, 0x960, 0x0;
 	int isdying : 0x8FB9B48, 0x60;
 	int Jack55Bonus : 0x8F80FF8, 0x70, 0x58;
@@ -64,6 +69,7 @@ state("re7", "NextGen")
 state("re7", "6/10/22")
 {
 	int gamePauseState: 0x8FC4478, 0x104;
+	byte Menu: 0x8FC4478, 0xAD;
 	string128 map : 0x8F7DF80, 0x960, 0x0;
 	int isdying : 0x8FB9CC8, 0x60;
 	int Jack55Bonus : 0x8F81178, 0x70, 0x58;
@@ -468,7 +474,7 @@ split
 		return settings["100family"];
 	}
 	
-	if (current.map == "c03_TrailerHouse" && old.map == "c03_GardenArea1" && !vars.splits.Contains("Trailer1"))
+	if (current.map == "c03_TrailerHouse" && current.Menu != 1 && !vars.splits.Contains("Trailer1"))
 	{
 		vars.splits.Add("Trailer1");
 		return settings["Trailer1"];
@@ -505,7 +511,7 @@ isLoading
 		return current.gamePauseState != 0 && current.gamePauseState != 262400 && current.gamePauseState != 8 && current.gamePauseState != 262144 || current.Jack55End == 1;
 	}
 	
-	else return current.gamePauseState != 0 && current.gamePauseState != 262400 && current.gamePauseState != 8 && current.gamePauseState != 262144;
+	else return current.gamePauseState != 0 && current.gamePauseState != 262400 && current.gamePauseState != 8 && current.gamePauseState != 262144 || current.Menu == 1;
 }
 
 reset
