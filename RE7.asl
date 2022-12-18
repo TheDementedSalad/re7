@@ -1,6 +1,7 @@
 //Resident Evil 7 Autosplitter
-//By CursedToast 1/28/2017
-//Last updated 27/11/2022
+//Originally by CursedToast 1/28/2017
+//Maintained by TheDementedSalad 2022
+//Last updated 18/12/2022
 
 //Special thanks to:
 // Souzooka - helping me re-code this to reduce lag and improving my coding in ASL. Couldn't have done this without him :)
@@ -139,6 +140,8 @@ startup
 	settings.Add("EvelynRadar1", false, "Mia Start");
 	settings.Add("fuse2", false, "Fuse 2 (ship)");
 	settings.Add("FoundFootage050", false, "Mia Videotape (picked up)");
+	settings.Add("DownElevator", false, "Enter Bottom Floor");
+	settings.Add("UpElevator", false, "Leave Bottom Floor");
 	settings.Add("videotapeend", false, "Mia Tape End");
 	settings.Add("EvOpener", false, "Lug Wrench");
 	settings.Add("EvCable", false, "Power Cable");
@@ -188,6 +191,8 @@ startup
 	settings.CurrentDefaultParent = null;
 	
 	settings.Add("55th", false, "Jack's 55th Birthday");
+	
+	settings.Add("EMD", false, "Ethan Must Die");
 }
 
 init
@@ -278,6 +283,9 @@ start
 	}
 	if (settings["55th"]){
 		return (current.Jack55Start == 1 && old.Jack55Start == 0);
+	}
+	if (settings["EMD"]){
+		return (current.map == "c03_OldHouse1FBridge01" && current.inventory[0] == "Knife");
 	}
 
 	return current.map == "c04_Ship3FInfirmaryPast";
@@ -480,6 +488,18 @@ split
 		return settings["Trailer1"];
 	}
 	
+	if(current.map == "c04_ShipB2Corridor01Past" && !vars.splits.Contains("DownElevator"))
+		{
+		vars.splits.Add("DownElevator");
+		return settings["DownElevator"];
+	}
+	
+	if(current.map == "sm1864_ShipElevator01A_UpDown" && old.map == "c04_ShipB2Corridor01Past" && !vars.splits.Contains("UpElevator"))
+		{
+		vars.splits.Add("UpElevator");
+		return settings["UpElevator"];
+	}
+	
 	if (current.map == "c08_BossRoom01" && !vars.splits.Contains("lucsbossRoom"))
 	{
 		vars.splits.Add("lucsbossRoom");
@@ -517,6 +537,10 @@ isLoading
 reset
 {
 	if (settings["55th"]){
+		return current.gamePauseState == 0 && old.gamePauseState == 256;
+	}
+	
+	if (settings["EMD"]){
 		return current.gamePauseState == 0 && old.gamePauseState == 256;
 	}
 }
