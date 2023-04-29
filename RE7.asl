@@ -1,7 +1,7 @@
 //Resident Evil 7 Autosplitter
 //Originally by CursedToast 1/28/2017
 //Maintained by TheDementedSalad 2022
-//Last updated 18/12/2022
+//Last updated 29/04/2023
 
 //Special thanks to:
 // Souzooka - helping me re-code this to reduce lag and improving my coding in ASL. Couldn't have done this without him :)
@@ -45,12 +45,26 @@ state("re7", "12/17 Update")
 	byte Menu: 0x81FA818, 0xAD;
 	string128 map : 0x81E9B00, 0x700, 0x0;
 	int isdying : 0x81F1308, 0x60;
-	int Jack55Bonus : 0x8227C20, 0x70, 0x58;
-	int Jack55IGT : 0x8227C20, 0x70, 0x98;
-	int Jack55Extra : 0x8227C20, 0x70, 0xC0;
-	byte Jack55Start: 0x8227C20, 0x70, 0xC8;
+	int Jack55Bonus : 0x82353B8, 0x70, 0x58;
+	int Jack55IGT : 0x82353B8, 0x70, 0x98;
+	int Jack55Extra : 0x82353B8, 0x70, 0xC0;
+	byte Jack55Start: 0x82353B8, 0x70, 0xC8;
 	byte Jack55Level : 0x8224BB0, 0x50, 0x268, 0x30, 0x30, 0x100, 0x40, 0x1C0;
-	byte Jack55End : 0x8227C20, 0xB0;
+	byte Jack55End : 0x82353B8, 0xB0;
+}
+
+state("re7", "Endof DX11")
+{
+	int gamePauseState: 0x8207330, 0x104;
+	byte Menu: 0x8207330, 0xAD;
+	string128 map : 0x81F7218, 0x700, 0x0;
+	int isdying : 0x81FEF90, 0x60;
+	int Jack55Bonus : 0x82353B8, 0x70, 0x58;
+	int Jack55IGT : 0x82353B8, 0x70, 0x98;
+	int Jack55Extra : 0x82353B8, 0x70, 0xC0;
+	byte Jack55Start: 0x82353B8, 0x70, 0xC8;
+	byte Jack55Level : 0x8232148, 0x50, 0x268, 0x30, 0x30, 0x100, 0x40, 0x1C0;
+	byte Jack55End : 0x82353B8, 0xB0;
 }
 
 state("re7", "NextGen")
@@ -206,9 +220,14 @@ init
 	vars.Jack55Timer = 0;
 	vars.Jack55Finish = 0;
 	
-	try{
-		// Latest Steam updates that share same MemorySize
-		switch ((string)vars.Helper.GetMD5Hash()){
+	string md5 = "";
+    try {
+        md5 = (string)vars.Helper.GetMD5Hash();
+    } catch {
+        // Failed to open file for MD5 computation.
+    }
+	
+	switch (md5) {
 			case "C505F2F8DD88C1478DA4B98FD49D7991":
 			version = "12/17 Update";
 			vars.inventoryPtr = 0x81F1308;
@@ -221,12 +240,9 @@ init
 			version = "6/10/22";
 			vars.inventoryPtr = 0x8FB9CC8;
 			break;
-		}
-	}
-	catch{
-		// Failed to open file for MD5 computation.
-		// Windows Store Versions
-		switch ((int)vars.Helper.GetMemorySize()){
+        default:
+            // No version found with hash, fallback to memorySize
+            switch ((int)vars.Helper.GetMemorySize()) {
 			case (162590720):
 				version = "cerod_nvidia";
 				vars.inventoryPtr = 0x9322E10;
@@ -240,7 +256,12 @@ init
 				version = "CeroD 20.4.0.2";
 				vars.inventoryPtr = 0x9355468;
 				break;
+			case (142331904):
+				version = "Endof DX11";
+				vars.inventoryPtr = 0x81FEF90;
+				break;
 		}
+        break;
 	}
 
 	// Track inventory IDs
