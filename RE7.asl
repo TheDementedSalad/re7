@@ -95,6 +95,19 @@ state("re7", "6/10/22")
 	byte Jack55End : 0x8F81178, 0xB0;
 }
 
+state("re7", "9/5/23")
+{
+	int gamePauseState: 0x88FF2790, 0x104;
+	byte Menu: 0x8FF2790, 0xAD;
+	string128 map : 0x8FAC0B0, 0x960, 0x0;
+	int isdying : 0x8FE7A88, 0x60;
+	int Jack55Bonus : 0x08FAF3A8, 0x70, 0x58;
+	int Jack55IGT : 0x08FAF3A8, 0x70, 0x98;
+	int Jack55Extra : 0x08FAF3A8, 0x70, 0xC0;
+	int Jack55Start : 0x08FAF3A8, 0x70, 0xC8;
+	byte Jack55Level : 0x08FAF3A8, 0x6C8, 0x270, 0xB8, 0x3D0, 0x80, 0x1C4;
+	byte Jack55End : 0x08FAF3A8, 0xB0;
+}
 startup
 {
 	Assembly.Load(File.ReadAllBytes("Components/asl-help")).CreateInstance("Basic");
@@ -259,6 +272,10 @@ init
 			case (142331904):
 				version = "Endof DX11";
 				vars.inventoryPtr = 0x81FEF90;
+				break;
+			case (161677312):
+				version = "9/5/23";
+				vars.inventoryPtr = 0x8FE7A88;
 				break;
 		}
         break;
