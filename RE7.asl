@@ -282,7 +282,7 @@ init
 	}
 
 	// Track inventory IDs
-	if (version == "NextGen" || version == "6/10/22"){
+	if (version == "NextGen" || version == "6/10/22" || version == "9/5/23"){
 		current.inventory = new string[20].Select((_, i) => {
 		StringBuilder sb = new StringBuilder(300);
 		IntPtr ptr;
