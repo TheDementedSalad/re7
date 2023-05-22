@@ -97,7 +97,7 @@ state("re7", "6/10/22")
 
 state("re7", "9/5/23")
 {
-	int gamePauseState: 0x88FF2790, 0x104;
+	int gamePauseState: 0x8FF2790, 0x104;
 	byte Menu: 0x8FF2790, 0xAD;
 	string128 map : 0x8FAC0B0, 0x960, 0x0;
 	int isdying : 0x8FE7A88, 0x60;
@@ -180,7 +180,6 @@ startup
 	settings.Add("end", false, "End");
 	settings.CurrentDefaultParent = null;
 
-	
 	settings.Add("nah", false, "Not a Hero");
 	settings.CurrentDefaultParent = "nah";
 	settings.Add("c08_SaltMineCorridor01", false, "Reached the new section of the mine");
@@ -242,16 +241,20 @@ init
 	
 	switch (md5) {
 			case "C505F2F8DD88C1478DA4B98FD49D7991":
-			version = "12/17 Update";
-			vars.inventoryPtr = 0x81F1308;
+				version = "12/17 Update";
+				vars.inventoryPtr = 0x81F1308;
 			break;
 			case "9EDD76273F6653F2B39DE5B9CBB6EFA4":
-			version = "NextGen";
-			vars.inventoryPtr = 0x8FB9B48;
+				version = "NextGen";
+				vars.inventoryPtr = 0x8FB9B48;
 			break;
 			case "401BA759C4F1FE95ED06B33084FAA187":
-			version = "6/10/22";
-			vars.inventoryPtr = 0x8FB9CC8;
+				version = "6/10/22";
+				vars.inventoryPtr = 0x8FB9CC8;
+			break;
+			case "43303BA085DE21ADE83D7D1FB2CC6B86":
+				version = "9/5/23";
+				vars.inventoryPtr = 0x8FE7A88;
 			break;
         default:
             // No version found with hash, fallback to memorySize
@@ -272,10 +275,6 @@ init
 			case (142331904):
 				version = "Endof DX11";
 				vars.inventoryPtr = 0x81FEF90;
-				break;
-			case (161677312):
-				version = "9/5/23";
-				vars.inventoryPtr = 0x8FE7A88;
 				break;
 		}
         break;
@@ -334,7 +333,7 @@ update
 	//print(modules.First().ModuleMemorySize.ToString());
 	
 	// Track inventory IDs
-	if (version == "Next Gen" || version == "6/10/22"){
+	if (version == "Next Gen" || version == "6/10/22" || version == "9/5/23"){
 		current.inventory = new string[20].Select((_, i) => {
 		StringBuilder sb = new StringBuilder(300);
 		IntPtr ptr;
