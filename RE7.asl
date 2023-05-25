@@ -39,6 +39,14 @@ state("re7", "CeroD 20.4.0.2")
 	int isdying : 0x9355468, 0x60;
 }
 
+state("re7", "CeroD 20.5.0.2")
+{
+	int gamePauseState: 0x9387430, 0x104;
+	byte Menu: 0x9387430, 0xAD;
+	string128 map : 0x934CCA0, 0x700, 0x0;
+	int isdying : 0x9357E00, 0x60;
+}
+
 state("re7", "12/17 Update")
 {
 	int gamePauseState: 0x81FA818, 0x104;
@@ -97,8 +105,8 @@ state("re7", "6/10/22")
 
 state("re7", "9/5/23")
 {
-	int gamePauseState: 0x8FF2790, 0x104;
-	byte Menu: 0x8FF2790, 0xAD;
+	int gamePauseState: 0x8FF2790, 0x104;										//4 Paused 0 Unpaused
+	byte Menu: 0x8FF2790, 0xAD;													//Same Base as gamePauseState
 	string128 map : 0x8FAC0B0, 0x960, 0x0;
 	int isdying : 0x8FE7A88, 0x60;
 	int Jack55Bonus : 0x08FAF3A8, 0x70, 0x58;
@@ -271,6 +279,10 @@ init
 			case (162783232):
 				version = "CeroD 20.4.0.2";
 				vars.inventoryPtr = 0x9355468;
+				break;
+			case (162795520):
+				version = "CeroD 20.5.0.2";
+				vars.inventoryPtr = 0x9357E00;
 				break;
 			case (142331904):
 				version = "Endof DX11";
