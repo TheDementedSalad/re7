@@ -1,0 +1,142 @@
+<Settings>
+    <Setting Id="maingame"  Label="Main Game" State="false">
+		<Setting Id="meme" Label="Enable No Guest House" State="false"/>
+		<Setting Id="splits" Label="Main Game Splits" State="false">
+			<Setting Id="weapon" Label="Weapon Splits" State="false">
+				<Setting Id="HandAxe" Label="Axe (first time)" State="false"/>
+				<Setting Id="Knife" Label="Knife" State="false"/>
+				<Setting Id="Handgun_M19" Label="M19 (Guest House Gun)" State="false"/>
+				<Setting Id="Handgun_G17" Label="G17 (Garage Gun)" State="false"/>
+				<Setting Id="BrokenShotgun_DB" Label="Broken Shotgun" State="false"/>
+				<Setting Id="Shotgun_DB" Label="M21 Shotgun" State="false"/>
+				<Setting Id="BurnerPartsA" Label="Burner Grip" State="false"/>
+				<Setting Id="BurnerPartsB" Label="Burner Nozzle" State="false"/>
+				<Setting Id="GrenadeLauncher" Label="Grenade Launcher" State="false"/>
+				<Setting Id="Magnum" Label="Magnum" State="false"/>
+				<Setting Id="Handgun_Albert" Label="Albert-01" State="false"/>
+			</Setting>
+			<Setting Id="guest" Label="Mia's Guest House" State="false">
+				<Setting Id="c01_Corridor01" Label="Reached the Guest House" State="false"/>
+				<Setting Id="ChainCutter" Label="Bolt Cutters" State="false"/>
+				<Setting Id="Fuse" Label="Fuse (Guest House)" State="false"/>
+				<Setting Id="welcome2family" Label="Welcome to the family (splits during drag scene)" State="false">
+					<Setting Id="100family" Label="100% run (splits during Zoe stapling hand)" State="false"/>
+				</Setting>
+			</Setting>
+			<Setting Id="mainh" Label="Jack's Main House" State="false">
+				<Setting Id="FloorDoorKey" Label="Hatch Key" State="false"/>
+				<Setting Id="EthanCarKey" Label="Car Key" State="false"/>
+				<Setting Id="EntranceHallKey" Label="Ox Statuette" State="false"/>
+				<Setting Id="PendulumClock" Label="Clock Pendelum" State="false"/>
+				<Setting Id="3CrestKeyA" Label="Blue Dog Head" State="false"/>
+				<Setting Id="SilhouettePazzlePiece" Label="Wooden Statuette" State="false"/>
+				<Setting Id="3CrestKeyB" Label="White Dog Head" State="false"/>
+				<Setting Id="WorkroomKey" Label="Dissection Room Key" State="false"/>
+				<Setting Id="3CrestKeyC" Label="Red Dog Head" State="false"/>
+				<Setting Id="ChainSaw" Label="Chainsaw" State="false"/>
+				<Setting Id="chainsawduel" Label="Finished Chainsaw Fight" State="false"/>
+				<Setting Id="MorgueKey" Label="Scorpion Key" State="false"/>
+			</Setting>
+			<Setting Id="oldh" Label="Marge's Old House" State="false">
+				<Setting Id="Trailer1" Label="Reached the trailer (first time)" State="false"/>
+				<Setting Id="c03_OldHouse1FEntrance01" Label="Reached the Old House" State="false"/>
+				<Setting Id="SilhouettePazzlePieceOldHouse" Label="Stone Statue" State="false"/>
+				<Setting Id="Crank" Label="Crank" State="false"/>
+				<Setting Id="TalismanKey" Label="Crow Key" State="false"/>
+				<Setting Id="c03_OldHouse2FHallway02" Label="Entered Crow Door (after falling down hole)" State="false"/>
+				<Setting Id="Lantern" Label="Lantern" State="false"/>
+				<Setting Id="usedlantern" Label="Placed Lantern (to unlock door)" State="false"/>
+				<Setting Id="SerumMaterialA" Label="D-Series Arm" State="false"/>
+				<Setting Id="MasterKey" Label="Heisenberg Rose Discussion" State="false"/>
+			</Setting>
+			<Setting Id="lucas" Label="Lucas' Testing Area" State="false">
+				<Setting Id="LucasCardKey2" Label="Red Keycard" State="false"/>
+				<Setting Id="LucasCardKey" Label="Blue Keycard" State="false"/>
+				<Setting Id="c03_LeftArea2FTvRoom" Label="Reached Lucas TV room" State="false"/>
+				<Setting Id="Battery" Label="Battery" State="false"/>
+				<Setting Id="Candle" Label="Candle" State="false"/>
+				<Setting Id="Valve" Label="Valve Handle" State="false"/>
+				<Setting Id="Timebomb" Label="Timebomb" State="false"/>
+				<Setting Id="SerumMaterialB" Label="D-Series Head" State="false"/>
+				<Setting Id="SerumComplete" Label="Completed Serum" State="false"/>
+				<Setting Id="hittheroadjack" Label="Injected Jack" State="false"/>
+				<Setting Id="EvelynRadar1" Label="Mia Start" State="false"/>
+			</Setting>
+			<Setting Id="boat" Label="Connections' Wrecked Ship" State="false">
+				<Setting Id="fuse2" Label="Fuse 2 (ship)" State="false"/>
+				<Setting Id="FoundFootage050" Label="Mia Videotape (picked up)" State="false"/>
+				<Setting Id="DownElevator" Label="Enter Bottom Floor" State="false"/>
+				<Setting Id="UpElevator" Label="Leave Bottom Floor" State="false"/>
+				<Setting Id="videotapeend" Label="Mia Tape End" State="false"/>
+				<Setting Id="EvOpener" Label="Lug Wrench" State="false"/>
+				<Setting Id="EvCable" Label="Power Cable" State="false"/>
+				<Setting Id="fuse3" Label="Retrieved Fuse (from door on ship)" State="false"/>
+				<Setting Id="EvelynRadar4" Label="Mia Complete" State="false"/>
+			</Setting>
+			<Setting Id="finale" Label="Eveline's Finale" State="false">
+				<Setting Id="c04_CavePassage01" Label="Enter Salt Mines" State="false"/>
+				<Setting Id="SerumTypeE" Label="Necrotoxin" State="false"/>
+				<Setting Id="c04_CaveEV03" Label="Finish the Gauntlet" State="false"/>
+				<Setting Id="injectedbitch" Label="Injected Evie" State="false"/>
+				<Setting Id="end" Label="End" State="false"/>
+			</Setting>
+		</Setting>
+	</Setting>
+	<Setting Id="dlc"  Label="DLC's" State="false">
+		<Setting Id="nah"  Label="Not a Hero" State="false">
+			<Setting Id="c08_SaltMineCorridor01" Label="Reached the new section of the mine" State="false"/>
+			<Setting Id="KeyItem05Ch8" Label="Gear" State="false"/>
+			<Setting Id="KeyItem03Ch8" Label="Crank" State="false"/>
+			<Setting Id="Ch8CageKey" Label="Cage Key" State="false"/>
+			<Setting Id="c08_MiningRoom01" Label="Entered soldier 2's cell" State="false"/>
+			<Setting Id="Handgun_Albert_C" Label="Handgun" State="false"/>
+			<Setting Id="AlbertHandgunBulletL" Label="Ramrods (first time, near night vision)" State="false"/>
+			<Setting Id="MineMasterKey" Label="Clown Key" State="false"/>
+			<Setting Id="Shotgun_Albert" Label="Shotgun" State="false"/>
+			<Setting Id="c08_TrainPassage05" Label="Saved soldier 3 (triggers in room with ladder)" State="false"/>
+			<Setting Id="c08_MiningTunnel01" Label="Reached fat molded boss room" State="false"/>
+			<Setting Id="nah_bombgone" Label="Beat fat molded/Removed bomb (triggers after leaving area after removing bomb)" State="false"/>
+			<Setting Id="c08_ShieldMachine_Entra" Label="Entered the Blast Door" State="false"/>
+			<Setting Id="c08_MineTerminal01" Label="Escaped the explosion (post-horde)" State="false"/>
+			<Setting Id="lucsbossRoom" Label="Reached the Lucas boss room" State="false"/>
+			<Setting Id="nah_end" Label="End" State="false"/>
+		</Setting>
+		<Setting Id="eoz"  Label="End of Zoe" State="false">
+			<Setting Id="NumaItem030" Label="Cure for Type-E Infection" State="false"/>
+			<Setting Id="c09e14_01_pl9000" Label="Inject Zoe With Serum" State="false"/>
+			<Setting Id="c09e22_00_pl9000" Label="Placed Zoe One the Couch" State="false"/>
+			<Setting Id="c09_CampAreaAlley01" Label="Beat Swamp Monster" State="false"/>
+			<Setting Id="c09_SteamBoat3F" Label="Reached Captains Helm On Boat" State="false"/>
+			<Setting Id="NumaItem031" Label="Second Cure for Type-E Infection (on boat)" State="false"/>
+			<Setting Id="c09e24_00_pl9000" Label="Defeated Jack (on boat)" State="false"/>
+			<Setting Id="c09_ClimbingHut" Label="Made It to Stairs In Alligator Swamp" State="false"/>
+			<Setting Id="c09_Cemetery" Label="Reached the Cemetery" State="false"/>
+			<Setting Id="c09e33_01_pl9000" Label="Reach Zoe In the Church" State="false"/>
+			<Setting Id="CH9_WP001" Label="AMG-78" State="false"/>
+			<Setting Id="c03_MainHouseHall" Label="Reached the Baker's Main Hall" State="false"/>
+			<Setting Id="eoz_end" Label="End" State="false"/>
+		</Setting>
+		<Setting Id="daught"  Label="Daughters" State="false">
+			<Setting Id="Clothes" Label="Change of Clothes" State="false"/>
+			<Setting Id="TrophySwitch" Label="Small Component" State="false"/>
+			<Setting Id="c07e42_50_pl3400" Label="Eveline Wakes Up" State="false"/>
+			<Setting Id="c07e49_00_pl3400" Label="Find Lucas On the Floor" State="false"/>
+			<Setting Id="c07e43_00_pl3400" Label="Marge Buggin Out" State="false"/>
+			<Setting Id="ItemRope" Label="Rope" State="false"/>
+			<Setting Id="c07e44_00_pl3400" Label="Jack Drowning Marge" State="false"/>
+			<Setting Id="GimmickForkCh7_4" Label="Fork" State="false"/>
+			<Setting Id="3CrestKeyBch74" Label="Dog Head Relief" State="false"/>
+			<Setting Id="daught_end" Label="End (Splits on final event of both endings)" State="false"/>
+		</Setting>
+		<Setting Id="bed" Label="Bedroom" State="false">
+			<Setting Id="bed_end" Label="End Split" State="false"/>
+		</Setting>
+		<Setting Id="55th" Label="Jack's 55th Birthday" State="false"/>
+		<Setting Id="21" Label="21" State="false">
+			<Setting Id="c07e25_04_pl3000" Label="Fingers" State="false"/>
+			<Setting Id="c07e25_03_pl3000" Label="Electrocution" State="false"/>
+			<Setting Id="21_end" Label="End (Splits on you winning the final hand)" State="false"/>
+		<Setting>
+		<Setting Id="EMD" Label="Ethan Must Die" State="false"/>
+	</Setting>
+</Settings>
