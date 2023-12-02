@@ -132,11 +132,11 @@
 			<Setting Id="bed_end" Label="End Split" State="false"/>
 		</Setting>
 		<Setting Id="55th" Label="Jack's 55th Birthday" State="false"/>
-		<Setting Id="21" Label="21" State="false">
+		<Setting Id="21DLC" Label="21" State="false">
 			<Setting Id="c07e25_04_pl3000" Label="Fingers" State="false"/>
 			<Setting Id="c07e25_03_pl3000" Label="Electrocution" State="false"/>
 			<Setting Id="21_end" Label="End (Splits on you winning the final hand)" State="false"/>
-		<Setting>
+		</Setting>
 		<Setting Id="EMD" Label="Ethan Must Die" State="false"/>
 	</Setting>
 </Settings>
