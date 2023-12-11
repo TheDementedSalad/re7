@@ -231,7 +231,7 @@ start
 			current.Chapter == 29 && current.Events == "c07e10_00_pl3000" || // Bedroom
 			current.Chapter == 34 && current.map == "c03_OldHouse1FBridge01" && current.inventory[0] == "Knife" || // Ethan Must Die
 			(current.Chapter == 22 || current.Chapter == 23 || current.Chapter == 24 || current.Chapter == 25) && current.Jack55Start == 1 && old.Jack55Start == 0 || // Jack's 55th
-			current.Events == "c07e25_50_pl3000" || "c07e25_03_pl3000"; // 21
+			current.Events == "c07e25_50_pl3000" || current.Events == "c07e25_03_pl3000"; // 21
 }
 
 update
