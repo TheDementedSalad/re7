@@ -47,7 +47,7 @@
 				<Setting Id="Lantern" Label="Lantern" State="false"/>
 				<Setting Id="usedlantern" Label="Placed Lantern (to unlock door)" State="false"/>
 				<Setting Id="SerumMaterialA" Label="D-Series Arm" State="false"/>
-				<Setting Id="MasterKey" Label="Heisenberg Rose Discussion" State="false"/>
+				<Setting Id="MasterKey" Label="Snake Key" State="false"/>
 			</Setting>
 			<Setting Id="lucas" Label="Lucas' Testing Area" State="false">
 				<Setting Id="LucasCardKey2" Label="Red Keycard" State="false"/>
