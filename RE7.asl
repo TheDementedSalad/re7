@@ -1,7 +1,7 @@
 //Resident Evil 7 Autosplitter
 //Originally by CursedToast 1/28/2017
-//Maintained by TheDementedSalad since 2022
-//Last updated 2 Dec 2013
+//Maintained by TheDementedSalad 2022
+//Last updated 29/04/2023
 
 //Special thanks to:
 // Souzooka - helping me re-code this to reduce lag and improving my coding in ASL. Couldn't have done this without him :)
@@ -450,7 +450,7 @@ split
 		return true;
 	}
 	
-	if (removedItems.Contains("MasterKey") && !vars.splits.Contains("bed_end")){
+	if (settings["daught"] && removedItems.Contains("MasterKey") && !vars.splits.Contains("bed_end")){
 		vars.splits.Add("bed_end");
 		return true;
 	}
