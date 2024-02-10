@@ -450,7 +450,7 @@ split
 		return true;
 	}
 	
-	if (settings["daught"] && removedItems.Contains("MasterKey") && !vars.splits.Contains("bed_end")){
+	if (settings["bed"] && removedItems.Contains("MasterKey") && !vars.splits.Contains("bed_end")){
 		vars.splits.Add("bed_end");
 		return true;
 	}
