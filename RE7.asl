@@ -145,6 +145,7 @@ init
 	vars.inventoryPtr = IntPtr.Zero;
 	vars.fuse3PickedUp = 0;
 	vars.fuse2PickedUp = 0;
+	vars.eoz = 0;
 
 	vars.Jack55Full = 0;
 	vars.Jack55Timer = 0;
@@ -226,7 +227,7 @@ start
 	return current.Events == "c00e00_00_pl2000" || // Main Game
 			current.Chapter == 5 && (current.inventory[0] == "Knife" || current.inventory[1] == "Knife") && current.map == "c03_MainHouse1FWash" || // No Guest House
 			current.map == "c04_CavePassage01" && current.inventory[0] == "CKnife" || // Not a Hero
-			current.Events == "c09e11_00_pl9000" || // End of Zoe
+			vars.eoz == 0 && old.gamePauseState == 262400 && current.gamePauseState == 0 || current.Events == "c09e11_00_pl9000" && old.Events != "c09e11_00_pl9000" || // End of Zoe
 			current.Events == "c07e40_00_pl3400" || // Daughters
 			current.Chapter == 29 && current.Events == "c07e10_00_pl3000" || // Bedroom
 			current.Chapter == 34 && current.map == "c03_OldHouse1FBridge01" && current.inventory[0] == "Knife" || // Ethan Must Die
@@ -237,6 +238,7 @@ start
 update
 {
 	//print(modules.First().ModuleMemorySize.ToString());
+	//print(vars.eoz.ToString());
 	
 	// Track inventory IDs
 	if (version == "Next Gen" || version == "6/10/22" || version == "9/5/23"){
@@ -266,6 +268,7 @@ update
 		vars.Jack55Full = 0;
 		vars.Jack55Finish = 0;
 		vars.Jack55Timer = 0;
+		vars.eoz = 0;
 	}
 	
 	if(settings["55th"]){
@@ -294,6 +297,11 @@ update
 	
 	if (!settings["55th"]){
 		vars.Helper.Texts.RemoveAll();
+	}
+	
+	if(current.Events != "InteractEvent_GetSerum" && old.Events == "InteractEvent_GetSerum"){
+		vars.eoz = 1;
+		return true;
 	}
 }
 
@@ -482,6 +490,12 @@ reset
 	
 	if (settings["daught"]){
 		return current.Chapter == 32 && old.Chapter == 28;
+	}
+	
+	if (settings["eoz"]){
+		if(vars.eoz == 0 && current.gamePauseState == 262400 && old.gamePauseState != 262400 || current.Events == "c09e11_00_pl9000" && old.Events != "c09e11_00_pl9000"){
+			return true;
+		}
 	}
 	
 	if (settings["bed"]){
