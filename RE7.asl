@@ -60,7 +60,7 @@ state("re7", "Endof DX11")
 	byte Jack55End : 0x8232148, 0xB0;
 }
 
-state("re7", "NextGen")
+state("re7", "Next Gen")
 {
 	byte Chapter: 0x8FC42F8, 0x54;
 	int gamePauseState: 0x8FC42F8, 0x104;
@@ -164,7 +164,7 @@ init
 				vars.inventoryPtr = 0x81F1308;
 			break;
 			case "9EDD76273F6653F2B39DE5B9CBB6EFA4":
-				version = "NextGen";
+				version = "Next Gen";
 				vars.inventoryPtr = 0x8FB9B48;
 			break;
 			case "401BA759C4F1FE95ED06B33084FAA187":
