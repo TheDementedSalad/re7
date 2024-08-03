@@ -174,12 +174,12 @@ update
 	
 	if (version == "Next Gen" || version == "6/10/22" || version == "9/5/23"){
 		for (int i = 0; i < vars.InventorySlots; i++)
-        current.inventory[i] = vars.Helper.ReadString(300, ReadStringType.UTF16, vars.Inv, 0x60, 0x10, 0x20 + i * 0x8, 0x18, 0x80, 0x14);
+        	current.inventory[i] = vars.Helper.ReadString(300, ReadStringType.UTF16, vars.Inv, 0x60, 0x10, 0x20 + i * 0x8, 0x18, 0x80, 0x14);
 	}
 	
 	else{
 		for (int i = 0; i < vars.InventorySlots; i++)
-		current.inventory[i] = vars.Helper.ReadString(300, ReadStringType.UTF16, vars.Inv,  0x60, 0x20, 0x30 + (i * 8), 0x28, 0x80, 0x24);
+		current.inventory[i] = vars.Helper.ReadString(300, ReadStringType.UTF16, vars.Inv,  0x60, 0x20, 0x30 + i * 0x8, 0x28, 0x80, 0x24);
 	}
 }
 
