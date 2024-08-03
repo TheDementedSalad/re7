@@ -16,6 +16,7 @@
 //Ero - ASL helper and code for mm:ss:fff timer for Jack's 55th
 
 state("re7", "CeroD 20.5.0.2"){}
+state("re7", "CeroD 20.4.0.2"){}
 state("re7", "12/17 Update"){}
 state("re7", "Endof DX11"){}
 state("re7", "Next Gen"){}
