@@ -224,6 +224,25 @@ split
 			continue;
 
 		var item = current.inventory[i];
+
+		if (item == "FuseCh4"){
+				if (vars.fuse2PickedUp == 0 && current.map != "c04_Ship1FCorridor"){
+					vars.fuse2PickedUp = 1;
+					return settings["fuse2"];
+				}
+				else if (vars.fuse3PickedUp == 0 && current.map == "c04_Ship1FCorridor"){
+					if (settings["fuse2"]){
+						if (vars.fuse2PickedUp == 1){
+							vars.fuse3PickedUp = 1;
+							return settings["fuse3"];
+						}
+					}
+					else{
+						vars.fuse3PickedUp = 1;
+						return settings["fuse3"];
+					}
+				}
+			}
 	  
 		if(!string.IsNullOrEmpty(item)){
 			setting = "Item_" + item;
