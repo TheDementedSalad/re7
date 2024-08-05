@@ -64,17 +64,15 @@ init
 	vars.Eve = Event;
 
 	vars.splits = new HashSet<string>();
-	vars.inventoryPtr = IntPtr.Zero;
 	vars.fuse3PickedUp = 0;
 	vars.fuse2PickedUp = 0;
 	vars.eoz = 0;
+	
+	vars.InventorySlots = 20;
 
 	vars.Full55 = 0;
 	vars.Timer55 = 0;
 	vars.Finish55 = 0;
-	
-	vars.InventorySlots = 20;
-    current.inventory = new string[vars.InventorySlots];
 	
 	string md5 = "";
     try {
@@ -113,17 +111,21 @@ init
 	}
 	
 	if (version == "Next Gen" || version == "6/10/22" || version == "9/5/23"){
+		vars.Helper["inventSize"] = vars.Helper.Make<byte>(InventoryManager, 0x60, 0x18);
 		vars.Helper["Events"] = vars.Helper.MakeString(vars.Eve, 0x78, 0x80, 0x58, 0x10, 0x14);
 		vars.Helper["Events"].FailAction = MemoryWatcher.ReadFailAction.SetZeroOrNull;
 		vars.Helper["map"] = vars.Helper.MakeString(CurrMap, 0x960, 0x0);
 		vars.Helper["isLoading"] = vars.Helper.Make<int>(GameManager, 0x1A4);
+		
 	}
 	
 	else{
+		vars.Helper["inventSize"] = vars.Helper.Make<byte>(InventoryManager, 0x60, 0x28);
 		vars.Helper["Events"] = vars.Helper.MakeString(vars.Eve, 0x78, 0x80, 0x58, 0x20, 0x24);
 		vars.Helper["Events"].FailAction = MemoryWatcher.ReadFailAction.SetZeroOrNull;
 		vars.Helper["map"] = vars.Helper.MakeString(CurrMap, 0x700, 0x0);
 		vars.Helper["isLoading"] = vars.Helper.Make<int>(GameManager, 0x1AC);
+		vars.Helper["Inv2"] = vars.Helper.MakeString(InventoryManager, 0x60, 0x20, 0x40, 0x28, 0x80, 0x24);
 	}
 }
 
@@ -174,13 +176,15 @@ update
 	
 	if (version == "Next Gen" || version == "6/10/22" || version == "9/5/23"){
 		for (int i = 0; i < vars.InventorySlots; i++)
-        	current.inventory[i] = vars.Helper.ReadString(300, ReadStringType.UTF16, vars.Inv, 0x60, 0x10, 0x20 + i * 0x8, 0x18, 0x80, 0x14);
+        current.inventory[i] = vars.Helper.ReadString(300, ReadStringType.AutoDetect, vars.Inv, 0x60, 0x10, 0x20 + (i * 8), 0x18, 0x80, 0x14);
 	}
 	
 	else{
 		for (int i = 0; i < vars.InventorySlots; i++)
-		current.inventory[i] = vars.Helper.ReadString(300, ReadStringType.UTF16, vars.Inv,  0x60, 0x20, 0x30 + i * 0x8, 0x28, 0x80, 0x24);
+		current.inventory[i] = vars.Helper.ReadString(300, ReadStringType.AutoDetect, vars.Inv,  0x60, 0x20, 0x30 + (i * 8), 0x28, 0x80, 0x24);
 	}
+	
+	//print(current.inventSize.ToString());
 }
 
 onStart
@@ -191,6 +195,7 @@ onStart
 	}
 	
 	vars.splits.Clear();
+	vars.inventory.Clear();
 	vars.fuse2PickedUp = 0;
 	vars.fuse3PickedUp = 0;
 	vars.Full55 = 0;
@@ -219,30 +224,31 @@ split
 	// Item splits
 	string[] currentInventory = (current.inventory as string[]);
 	string[] oldInventory = (old.inventory as string[]); // throws error first update, will be fine afterwards.
+	
 	for (int i = 0; i < vars.InventorySlots; i++) {
 		if (old.inventory[i] == current.inventory[i])
 			continue;
 
 		var item = current.inventory[i];
-
+		
 		if (item == "FuseCh4"){
-				if (vars.fuse2PickedUp == 0 && current.map != "c04_Ship1FCorridor"){
-					vars.fuse2PickedUp = 1;
-					return settings["fuse2"];
-				}
-				else if (vars.fuse3PickedUp == 0 && current.map == "c04_Ship1FCorridor"){
-					if (settings["fuse2"]){
-						if (vars.fuse2PickedUp == 1){
-							vars.fuse3PickedUp = 1;
-							return settings["fuse3"];
-						}
-					}
-					else{
+			if (vars.fuse2PickedUp == 0 && current.map != "c04_Ship1FCorridor"){
+				vars.fuse2PickedUp = 1;
+				return settings["fuse2"];
+			}
+			else if (vars.fuse3PickedUp == 0 && current.map == "c04_Ship1FCorridor"){
+				if (settings["fuse2"]){
+					if (vars.fuse2PickedUp == 1){
 						vars.fuse3PickedUp = 1;
 						return settings["fuse3"];
 					}
 				}
+				else{
+					vars.fuse3PickedUp = 1;
+					return settings["fuse3"];
+				}
 			}
+		}
 	  
 		if(!string.IsNullOrEmpty(item)){
 			setting = "Item_" + item;
@@ -289,7 +295,6 @@ split
 	if(old.Events == "c01e07_01_pl0000" && string.IsNullOrEmpty(current.Events)){
 		setting = "Event_Welcome";
 	}
-
 
 	//End splits
 	if (removedItems.Contains("Handgun_Albert")){
