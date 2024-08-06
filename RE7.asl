@@ -66,7 +66,7 @@ init
 	vars.splits = new HashSet<string>();
 	vars.fuse3PickedUp = 0;
 	vars.fuse2PickedUp = 0;
-	vars.eoz = 0;
+	vars.EoZ = 0;
 	
 	vars.InventorySlots = 20;
 
@@ -168,15 +168,14 @@ update
 		vars.Total55 += timeLeft;
 		vars.Helper.Texts["Total Time"].Right = TimeSpan.FromMilliseconds(vars.Total55).ToString(@"mm\:ss\.fff");
 	}
-	
-	if(current.Events == "InteractEvent_GetSerum"){
-		vars.eoz = 1;
-		return true;
-	}
-	
+
 	if (version == "Next Gen" || version == "6/10/22" || version == "9/5/23"){
 		for (int i = 0; i < vars.InventorySlots; i++)
         current.inventory[i] = vars.Helper.ReadString(300, ReadStringType.AutoDetect, vars.Inv, 0x60, 0x10, 0x20 + (i * 8), 0x18, 0x80, 0x14);
+	}
+	
+	if(current.map == "sm2997_SmallCottage02A" && current.Events != "InteractEvent_GetSerum" && old.Events == "InteractEvent_GetSerum"){
+		vars.EoZ = 1;
 	}
 	
 	else{
@@ -195,14 +194,13 @@ onStart
 	}
 	
 	vars.splits.Clear();
-	vars.inventory.Clear();
 	vars.fuse2PickedUp = 0;
 	vars.fuse3PickedUp = 0;
 	vars.Full55 = 0;
 	vars.Finish55 = 0;
 	vars.Timer55 = 0;
-	vars.eoz = 0;
 	vars.TotalTimeInSeconds = 0f;
+	vars.EoZ = 0;
 }
 
 start
@@ -210,7 +208,7 @@ start
 	return current.Events == "c00e00_00_pl2000" || // Main Game
 		current.Chapter == 5 && (current.inventory[0] == "Knife" || current.inventory[1] == "Knife") && current.map == "c03_MainHouse1FWash" || // No Guest House
 		current.map == "c04_CavePassage01" && current.inventory[0] == "CKnife" || // Not a Hero
-		vars.eoz == 0 && old.gamePauseState == 262400 && current.gamePauseState == 0 || current.Events == "c09e11_00_pl9000" && old.Events != "c09e11_00_pl9000" || // End of Zoe
+		current.gamePauseState == 0 && old.gamePauseState == 262400 || current.Events == "c09e11_00_pl9000" && old.Events != "c09e11_00_pl9000" || // End of Zoe
 		current.Events == "c07e40_00_pl3400" || // Daughters
 		current.Chapter == 29 && current.Events == "c07e10_00_pl3000" || // Bedroom
 		current.Chapter == 34 && current.map == "c03_OldHouse1FBridge01" && current.inventory[0] == "Knife" || // Ethan Must Die
@@ -354,7 +352,7 @@ reset
 	}
 	
 	if (settings["eoz"]){
-		if(vars.eoz == 0 && current.gamePauseState == 262400 && old.gamePauseState != 262400 || current.Events == "c09e11_00_pl9000" && old.Events != "c09e11_00_pl9000"){
+		if(vars.EoZ == 0 && current.gamePauseState == 262148 && old.gamePauseState == 4 || current.Events == "c09e11_00_pl9000" && old.Events != "c09e11_00_pl9000"){
 			return true;
 		}
 	}
