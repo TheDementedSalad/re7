@@ -351,8 +351,11 @@ reset
 	}
 	
 	if (settings["eoz"]){
-		if(vars.EoZ == 0 && current.gamePauseState == 262148 && old.gamePauseState == 4 || current.Events == "c09e11_00_pl9000" && old.Events != "c09e11_00_pl9000"){
+		if(vars.EoZ == 0 && current.gamePauseState == 262148 && old.gamePauseState == 4){
 			return true;
+		}
+		if(current.Events == "c09e11_00_pl9000" && old.Events != "c09e11_00_pl9000"){
+			vars.EoZ = 0;
 		}
 	}
 	
