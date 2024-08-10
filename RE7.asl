@@ -356,6 +356,7 @@ reset
 		}
 		if(current.Events == "c09e11_00_pl9000" && old.Events != "c09e11_00_pl9000"){
 			vars.EoZ = 0;
+			return true;
 		}
 	}
 	
