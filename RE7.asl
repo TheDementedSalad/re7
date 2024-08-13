@@ -173,15 +173,14 @@ update
 		for (int i = 0; i < vars.InventorySlots; i++)
         current.inventory[i] = vars.Helper.ReadString(300, ReadStringType.AutoDetect, vars.Inv, 0x60, 0x10, 0x20 + (i * 8), 0x18, 0x80, 0x14);
 	}
+	else{
+		for (int i = 0; i < vars.InventorySlots; i++)
+		current.inventory[i] = vars.Helper.ReadString(300, ReadStringType.AutoDetect, vars.Inv,  0x60, 0x20, 0x30 + (i * 8), 0x28, 0x80, 0x24);
+	}
 	
 	if(current.Events == "InteractEvent_GetSerum"){
 		vars.EoZ = 1;
 		return true;
-	}
-	
-	else{
-		for (int i = 0; i < vars.InventorySlots; i++)
-		current.inventory[i] = vars.Helper.ReadString(300, ReadStringType.AutoDetect, vars.Inv,  0x60, 0x20, 0x30 + (i * 8), 0x28, 0x80, 0x24);
 	}
 }
 
