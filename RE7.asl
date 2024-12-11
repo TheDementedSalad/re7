@@ -1,17 +1,12 @@
 //Resident Evil 7 Autosplitter
 //Originally by CursedToast 1/28/2017
-//Maintained by TheDementedSalad 2022
-//Last updated 29/04/2023
+//Maintained by TheDementedSalad since 2022
+//Last updated 13/08/24
 
-//Special thanks to:
-// Souzooka - helping me re-code this to reduce lag and improving my coding in ASL. Couldn't have done this without him :)
-//CarcinogenSDA (you know why)
-//Dchaps - programming support
-//shiftweave - programming support
-//mgr.inz.Player - inventory memory value support
-//Theumer115 - inventory memory value support
-//DarkByte - inventory memory value support
-//Nexusphobiker - helping me find the most updated pointers in the 2/6/2017 RE7 update, and for teaching me how to find them again in the future.
+//Special thanks to the original creators and testers:
+//CursedToast, Souzooka, CarcinogenSDA, Dchaps, shiftweave, mgr.inz.Player, Theumer115 - inventory memory value support, DarkByte, Nexusphobiker
+
+
 //TheDementedSalad - found pointers for Steam DX12 update & CeroD Splashscreen update + Made Jack's 55th  timer.
 //Ero - ASL helper and code for mm:ss:fff timer for Jack's 55th
 
@@ -170,12 +165,12 @@ update
 	}
 
 	if (version == "Next Gen" || version == "6/10/22" || version == "9/5/23"){
-		for (int i = 0; i < vars.InventorySlots; i++)
-        current.inventory[i] = vars.Helper.ReadString(300, ReadStringType.AutoDetect, vars.Inv, 0x60, 0x10, 0x20 + (i * 8), 0x18, 0x80, 0x14);
+		for (int i = 0; i < current.inventSize; i++)
+        current.inventory[i] = vars.Helper.ReadString(300, ReadStringType.UTF16, vars.Inv, 0x60, 0x10, 0x20 + (i * 8), 0x18, 0x80, 0x14);
 	}
 	else{
-		for (int i = 0; i < vars.InventorySlots; i++)
-		current.inventory[i] = vars.Helper.ReadString(300, ReadStringType.AutoDetect, vars.Inv,  0x60, 0x20, 0x30 + (i * 8), 0x28, 0x80, 0x24);
+		for (int i = 0; i < current.inventSize; i++)
+		current.inventory[i] = vars.Helper.ReadString(300, ReadStringType.UTF16, vars.Inv,  0x60, 0x20, 0x30 + (i * 8), 0x28, 0x80, 0x24);
 	}
 	
 	if(current.Events == "InteractEvent_GetSerum"){
@@ -221,33 +216,35 @@ split
 	string[] currentInventory = (current.inventory as string[]);
 	string[] oldInventory = (old.inventory as string[]); // throws error first update, will be fine afterwards.
 	
-	for (int i = 0; i < vars.InventorySlots; i++) {
-		if (old.inventory[i] == current.inventory[i])
-			continue;
+	if(current.inventSize > old.inventSize){
+		for (int i = 0; i < current.inventSize; i++) {
+			if (old.inventory[i] == current.inventory[i])
+				continue;
 
-		var item = current.inventory[i];
-		
-		if (item == "FuseCh4"){
-			if (vars.fuse2PickedUp == 0 && current.map != "c04_Ship1FCorridor"){
-				vars.fuse2PickedUp = 1;
-				return settings["fuse2"];
-			}
-			else if (vars.fuse3PickedUp == 0 && current.map == "c04_Ship1FCorridor"){
-				if (settings["fuse2"]){
-					if (vars.fuse2PickedUp == 1){
+			var item = current.inventory[i];
+			
+			if (item == "FuseCh4"){
+				if (vars.fuse2PickedUp == 0 && current.map != "c04_Ship1FCorridor"){
+					vars.fuse2PickedUp = 1;
+					return settings["fuse2"];
+				}
+				else if (vars.fuse3PickedUp == 0 && current.map == "c04_Ship1FCorridor"){
+					if (settings["fuse2"]){
+						if (vars.fuse2PickedUp == 1){
+							vars.fuse3PickedUp = 1;
+							return settings["fuse3"];
+						}
+					}
+					else{
 						vars.fuse3PickedUp = 1;
 						return settings["fuse3"];
 					}
 				}
-				else{
-					vars.fuse3PickedUp = 1;
-					return settings["fuse3"];
-				}
 			}
-		}
-	  
-		if(!string.IsNullOrEmpty(item)){
-			setting = "Item_" + item;
+		  
+			if(!string.IsNullOrEmpty(item)){
+				setting = "Item_" + item;
+			}
 		}
 	}
 	
@@ -366,4 +363,6 @@ reset
 	if (settings["nah"]){
 		return current.gamePauseState == 0 && old.Chapter == 28;
 	}
+	
+	vars.splits.Clear();
 }
