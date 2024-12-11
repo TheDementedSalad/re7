@@ -63,7 +63,7 @@ init
 	vars.fuse2PickedUp = 0;
 	vars.EoZ = 0;
 	
-	vars.InventorySlots = 20;
+	
 
 	vars.Full55 = 0;
 	vars.Timer55 = 0;
@@ -111,7 +111,6 @@ init
 		vars.Helper["Events"].FailAction = MemoryWatcher.ReadFailAction.SetZeroOrNull;
 		vars.Helper["map"] = vars.Helper.MakeString(CurrMap, 0x960, 0x0);
 		vars.Helper["isLoading"] = vars.Helper.Make<int>(GameManager, 0x1A4);
-		
 	}
 	
 	else{
@@ -130,7 +129,7 @@ update
 	
 	vars.Helper.Update();
 	vars.Helper.MapPointers();
-	current.inventory = new string[vars.InventorySlots];
+	current.inventory = new string[current.inventSize + 1];
 	
 	if (!settings["55th"]){
 		vars.Helper.Texts.RemoveAll();
@@ -363,6 +362,4 @@ reset
 	if (settings["nah"]){
 		return current.gamePauseState == 0 && old.Chapter == 28;
 	}
-	
-	vars.splits.Clear();
 }
