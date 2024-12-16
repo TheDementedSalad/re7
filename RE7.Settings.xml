@@ -32,7 +32,7 @@
 				<Setting Id="Item_SilhouettePazzlePiece" Label="Wooden Statuette" State="false"/>
 				<Setting Id="Item_3CrestKeyB" Label="White Dog Head" State="false"/>
 				<Setting Id="Item_WorkroomKey" Label="Dissection Room Key" State="false"/>
-				<Setting Id="Event_c03e22_00_pl0000 " Label="Red Dog Head" State="false"/>
+				<Setting Id="Event_c03e22_00_pl0000" Label="Red Dog Head" State="false"/>
 				<Setting Id="Item_LucasCardKey2" Label="Red Keycard" State="false"/>
 				<Setting Id="Item_ChainSaw" Label="Chainsaw" State="false"/>
 				<Setting Id="Event_UseChainsaw" Label="Finished Chainsaw Fight" State="false"/>
