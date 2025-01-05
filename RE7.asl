@@ -62,6 +62,7 @@ init
 	vars.fuse3PickedUp = 0;
 	vars.fuse2PickedUp = 0;
 	vars.EoZ = 0;
+	vars.invMax = 20;
 	
 	
 
@@ -129,7 +130,7 @@ update
 	
 	vars.Helper.Update();
 	vars.Helper.MapPointers();
-	current.inventory = new string[current.inventSize + 1];
+	current.inventory = new string[vars.invMax];
 	
 	if (!settings["55th"]){
 		vars.Helper.Texts.RemoveAll();
@@ -215,7 +216,7 @@ split
 	string[] currentInventory = (current.inventory as string[]);
 	string[] oldInventory = (old.inventory as string[]); // throws error first update, will be fine afterwards.
 	
-	if(current.inventSize > old.inventSize){
+	if(current.inventSize != old.inventSize){
 		for (int i = 0; i < current.inventSize; i++) {
 			if (old.inventory[i] == current.inventory[i])
 				continue;
