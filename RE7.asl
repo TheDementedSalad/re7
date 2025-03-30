@@ -198,14 +198,30 @@ onStart
 
 start
 {	
-	return current.Events == "c00e00_00_pl2000" || // Main Game
-		current.Chapter == 5 && (current.inventory[0] == "Knife" || current.inventory[1] == "Knife") && current.map == "c03_MainHouse1FWash" || // No Guest House
-		current.map == "c04_CavePassage01" && current.inventory[0] == "CKnife" || // Not a Hero
-		current.gamePauseState == 0 && old.gamePauseState == 262400 || current.Events == "c09e11_00_pl9000" && old.Events != "c09e11_00_pl9000" || // End of Zoe
-		current.Events == "c07e40_00_pl3400" || // Daughters
-		current.Chapter == 29 && current.Events == "c07e10_00_pl3000" || // Bedroom
-		current.Chapter == 34 && current.map == "c03_OldHouse1FBridge01" && current.inventory[0] == "Knife" || // Ethan Must Die
-		(current.Chapter == 22 || current.Chapter == 23 || current.Chapter == 24 || current.Chapter == 25) && current.Start55 && !old.Start55; // Jack's 55th
+	if(settings["maingame"] && current.Events == "c00e00_00_pl2000"){// Main Game
+		return true;
+	}
+	else if(settings["meme"] && current.Chapter == 5 && current.isLoading == 100 && current.map == "c03_MainHouse1FWash"){ // No Guest House
+		return true;
+	}
+	else if(settings["nah"] && current.map == "c04_CavePassage01" && current.inventory[0] == "CKnife"){ // Not a Hero
+		return true;
+	}
+	else if(settings["eoz"] && (current.gamePauseState == 0 && old.gamePauseState == 262400 || current.Events == "c09e11_00_pl9000" && old.Events != "c09e11_00_pl9000")){ // End of Zoe
+		return true;
+	}
+	else if(settings["daught"] && current.Events == "c07e40_00_pl3400"){ // Daughters
+		return true;
+	}
+	else if(settings["bed"] && current.Chapter == 29 && current.Events == "c07e10_00_pl3000"){ // Bedroom
+		return true;
+	}
+	else if(settings["emd"] && current.Chapter == 34 && current.map == "c03_OldHouse1FBridge01" && current.inventory[0] == "Knife"){ // Ethan Must Die
+		return true;
+	}
+	else if(settings["55th"] && (current.Chapter == 22 || current.Chapter == 23 || current.Chapter == 24 || current.Chapter == 25) && current.Start55 && !old.Start55){ // Jack's 55th
+		return true;
+	}
 }
 
 split
